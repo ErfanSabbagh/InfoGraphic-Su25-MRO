@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>اینفوگرافیک MRO — موتورهای تومانسکی R-95Sh و R-195 | سوخو ۲۵</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a0e14;
+      --surface: #121a24;
+      --surface2: #1a2535;
+      --accent: #3d8f5a;
+      --accent2: #c9a227;
+      --accent3: #4a9eff;
+      --danger: #e85d4c;
+      --text: #e8edf4;
+      --muted: #8a9bb0;
+      --glow: rgba(61, 143, 90, 0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      direction: rtl;
+    }
+
+    body {
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      direction: rtl;
+      text-align: start;
+    }
+
+    /* Mixed Persian + Latin: keep English/numbers readable */
+    .en, .ltr-term {
+      direction: ltr;
+      unicode-bidi: isolate;
+      display: inline;
+    }
+
+    a, .url { direction: ltr; unicode-bidi: isolate; word-break: break-all; }
+
+    /* Animated background */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(rgba(61, 143, 90, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 143, 90, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 48px 48px; }
+    }
+
+    .bg-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.15;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .bg-glow-1 { top: -200px; right: -100px; background: var(--accent); animation: floatGlow 8s ease-in-out infinite; }
+    .bg-glow-2 { bottom: -200px; left: -100px; background: var(--accent3); animation: floatGlow 10s ease-in-out infinite reverse; }
+
+    @keyframes floatGlow {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(40px, 30px); }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(61, 143, 90, 0.15);
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--glow); }
+      50% { box-shadow: 0 0 20px 4px var(--glow); }
+    }
+
+    .hero h1 {
+      font-size: clamp(1.6rem, 5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.35;
+      max-width: 900px;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 60%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 1rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 700px;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 3rem;
+    }
+
+    .stat-pill {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 1.2rem 1.8rem;
+      min-width: 140px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .stat-pill:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+    .stat-pill .num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent2);
+      display: block;
+    }
+
+    .stat-pill .lbl { font-size: 0.8rem; color: var(--muted); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      animation: bounce 2s infinite;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* Layout */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    section { margin-bottom: 5rem; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-num {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent), #2a6b42);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px var(--glow);
+      animation: iconPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    .section-header h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Cards grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      inset-inline-start: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to left, var(--accent), transparent);
+      transform: scaleX(0);
+      transform-origin: inline-start;
+      transition: transform 0.4s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .card:hover::before { transform: scaleX(1); }
+
+    .card-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+
+    .card h3 { font-size: 1.1rem; margin-bottom: 0.6rem; color: var(--accent2); }
+
+    .card p { color: var(--muted); font-size: 0.92rem; }
+
+    /* MRO Levels */
+    .mro-ladder {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 2rem;
+    }
+
+    .mro-step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      border-inline-start: 4px solid var(--accent);
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .mro-step:hover { background: var(--surface2); }
+
+    .mro-level-tag {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .mro-step h4 { font-size: 1.15rem; margin-bottom: 0.3rem; }
+
+    /* Engine comparison */
+    .compare-wrap {
+      overflow-x: auto;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--surface);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table.compare {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    table.compare th,
+    table.compare td {
+      padding: 1rem 1.2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    table.compare th {
+      background: var(--surface2);
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+    }
+
+    table.compare th:first-child,
+    table.compare td:first-child {
+      text-align: start;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    table.compare tr:hover td { background: rgba(61, 143, 90, 0.08); }
+
+    .highlight-cell { color: var(--accent2); font-weight: 700; }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-inline-end: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      inset-inline-end: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--accent), var(--accent3), var(--accent2));
+      border-radius: 3px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 0 2.5rem 2rem;
+      margin-inline-end: 1.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      inset-inline-end: -2.35rem;
+      top: 0.4rem;
+      width: 14px;
+      height: 14px;
+      background: var(--accent2);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 12px var(--accent2);
+    }
+
+    .timeline-year {
+      font-size: 0.85rem;
+      color: var(--accent3);
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    /* TBO bars */
+    .tbo-chart { margin-top: 2rem; }
+
+    .tbo-row {
+      margin-bottom: 1.2rem;
+    }
+
+    .tbo-label {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      gap: 1rem;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .tbo-label span:last-child { direction: ltr; unicode-bidi: isolate; text-align: left; }
+
+    table.compare td:not(:first-child) { direction: ltr; unicode-bidi: isolate; }
+
+    .tbo-bar-bg {
+      height: 28px;
+      background: var(--surface2);
+      border-radius: 14px;
+      overflow: hidden;
+      direction: rtl;
+    }
+
+    .tbo-bar-fill {
+      height: 100%;
+      border-radius: 14px;
+      background: linear-gradient(to left, var(--accent), var(--accent3));
+      width: 0;
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-inline: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      min-width: fit-content;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.6rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: all 0.25s;
+    }
+
+    .tab-btn.active,
+    .tab-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .tab-panel { display: none; animation: fadeIn 0.4s ease; }
+    .tab-panel.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Surge diagram */
+    .surge-flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: 20px;
+      margin-top: 1rem;
+    }
+
+    .surge-node {
+      background: var(--surface2);
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 0.85rem;
+      max-width: 160px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .surge-node.danger { border-color: var(--danger); background: rgba(232, 93, 76, 0.1); }
+
+    .surge-arrow {
+      color: var(--accent2);
+      font-size: 1.5rem;
+      animation: arrowPulse 1.5s infinite;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .flow-seq {
+      direction: rtl;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    @keyframes arrowPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Engine flow schematic */
+    .engine-schematic {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 2rem 1rem;
+      background: linear-gradient(180deg, var(--surface) 0%, var(--surface2) 100%);
+      border-radius: 20px;
+      margin: 1.5rem 0;
+    }
+
+    .schem-part {
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 90px;
+      animation: partGlow 3s ease-in-out infinite;
+    }
+
+    .schem-part:nth-child(1) { background: #2a4a6b; animation-delay: 0s; }
+    .schem-part:nth-child(3) { background: #4a3060; animation-delay: 0.5s; }
+    .schem-part:nth-child(5) { background: #6b3020; animation-delay: 1s; }
+    .schem-part:nth-child(7) { background: #6b4a20; animation-delay: 1.5s; }
+    .schem-part:nth-child(9) { background: #3a3a4a; animation-delay: 2s; }
+
+    @keyframes partGlow {
+      0%, 100% { box-shadow: 0 0 0 transparent; }
+      50% { box-shadow: 0 0 20px rgba(74, 158, 255, 0.3); }
+    }
+
+    .schem-arrow { color: var(--accent2); font-size: 1.2rem; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--accent3); text-decoration: none; }
+
+    /* Progress nav */
+    .progress-nav {
+      position: fixed;
+      inset-inline-end: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: none;
+    }
+
+    @media (min-width: 1100px) {
+      .progress-nav { display: flex; flex-direction: column; gap: 8px; }
+    }
+
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .progress-dot.active {
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--glow);
+      transform: scale(1.3);
+    }
+
+    /* NDT badges */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .tech-badge {
+      padding: 0.4rem 0.9rem;
+      background: rgba(74, 158, 255, 0.15);
+      border: 1px solid rgba(74, 158, 255, 0.3);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--accent3);
+    }
+
+    .alert-box {
+      background: rgba(232, 93, 76, 0.1);
+      border: 1px solid rgba(232, 93, 76, 0.4);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .alert-box strong { color: var(--danger); }
+
+    /* Sticky chapter nav */
+    .chapter-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(10, 14, 20, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0.6rem 1rem;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .chapter-nav a {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      margin-inline-start: 0.35rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .chapter-nav a:hover,
+    .chapter-nav a.active { background: var(--accent); color: #fff; }
+
+    /* Expandable report blocks */
+    details.report-block {
+      margin-top: 1.25rem;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    details.report-block summary {
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--accent2);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      user-select: none;
+    }
+
+    details.report-block summary::-webkit-details-marker { display: none; }
+
+    details.report-block summary::before {
+      content: '◀';
+      font-size: 0.7rem;
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+
+    details.report-block[open] summary::before { transform: rotate(-90deg); }
+
+    .report-body {
+      padding: 0 1.25rem 1.25rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .report-body h4 {
+      color: var(--text);
+      margin: 1.25rem 0 0.5rem;
+      font-size: 1rem;
+    }
+
+    .report-body p { margin-bottom: 0.85rem; text-align: justify; }
+
+    .report-body ul { margin: 0.5rem 1.25rem 1rem 0; }
+
+    .report-body li { margin-bottom: 0.4rem; }
+
+    details.extra-block {
+      margin-top: 0.75rem;
+      background: rgba(74, 158, 255, 0.06);
+      border: 1px solid rgba(74, 158, 255, 0.2);
+      border-radius: 12px;
+    }
+
+    details.extra-block summary {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      font-size: 0.88rem;
+      color: var(--accent3);
+      list-style: none;
+    }
+
+    details.extra-block summary::-webkit-details-marker { display: none; }
+
+    .extra-body {
+      padding: 0 1rem 1rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .source-list {
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .source-item {
+      display: block;
+      padding: 0.65rem 1rem;
+      background: var(--surface2);
+      border-radius: 10px;
+      color: var(--accent3);
+      text-decoration: none;
+      font-size: 0.85rem;
+      text-align: start;
+      transition: background 0.2s;
+    }
+
+    .source-item:hover { background: var(--surface); color: #fff; }
+
+    .expand-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .toolbar-btn {
+      padding: 0.45rem 1rem;
+      background: var(--surface2);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toolbar-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+    /* Summary + More pattern */
+    .summary-box {
+      background: linear-gradient(135deg, rgba(61,143,90,0.12), rgba(74,158,255,0.08));
+      border: 1px solid rgba(61,143,90,0.25);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-box::after {
+      content: '';
+      position: absolute;
+      inset-inline-start: -50%;
+      top: 0;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+      animation: shimmer 4s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(350%); }
+    }
+
+    .summary-box h3 { font-size: 1rem; color: var(--accent2); margin-bottom: 0.5rem; }
+
+    details.report-block { margin-top: 1.5rem; }
+
+    details.report-block summary {
+      background: linear-gradient(to left, var(--surface2), var(--surface));
+      border-radius: 14px;
+      padding: 0.9rem 1.25rem;
+      font-size: 0.95rem;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    details.report-block[open] summary {
+      border-radius: 14px 14px 0 0;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+    }
+
+    details.report-block summary .more-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    details.report-block summary .more-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .report-verbatim h3 {
+      color: var(--text);
+      font-size: 1.05rem;
+      margin: 1.5rem 0 0.75rem;
+      padding-inline-start: 0.75rem;
+      border-inline-start: 3px solid var(--accent);
+    }
+
+    .report-verbatim h4 {
+      color: var(--accent2);
+      font-size: 0.95rem;
+      margin: 1.25rem 0 0.5rem;
+    }
+
+    /* Charts */
+    .charts-dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .chart-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 1.25rem;
+      transition: transform 0.35s, box-shadow 0.35s;
+    }
+
+    .chart-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+    }
+
+    .chart-card h3 {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 260px;
+    }
+
+    .chart-wrap.tall { height: 320px; }
+
+    .chart-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+
+    /* CSS animated histogram fallback bars */
+    .hist-chart { display: flex; flex-direction: column; gap: 0.65rem; }
+
+    .hist-row {
+      display: grid;
+      grid-template-columns: 100px 1fr 52px;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    .hist-bar-bg {
+      height: 22px;
+      background: var(--surface2);
+      border-radius: 6px;
+      overflow: hidden;
+      direction: rtl;
+    }
+
+    .hist-bar {
+      height: 100%;
+      border-radius: 6px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .hist-bar.c1 { background: linear-gradient(to left, #3d8f5a, #2a6b42); }
+    .hist-bar.c2 { background: linear-gradient(to left, #4a9eff, #2a6b9f); }
+    .hist-bar.c3 { background: linear-gradient(to left, #c9a227, #8a7018); }
+
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.2; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* Counter animation */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ── Mobile & tablet ── */
+    @media (max-width: 768px) {
+      .hero {
+        min-height: auto;
+        padding: 5rem 1rem 3rem;
+        padding-top: max(5rem, env(safe-area-inset-top, 0px) + 3rem);
+      }
+
+      .hero-stats {
+        gap: 0.75rem;
+        margin-top: 2rem;
+        width: 100%;
+      }
+
+      .stat-pill {
+        flex: 1 1 calc(50% - 0.75rem);
+        min-width: 0;
+        padding: 1rem;
+      }
+
+      .stat-pill .num { font-size: 1.6rem; }
+
+      .scroll-hint { display: none; }
+
+      .container {
+        padding: 0 1rem 3rem;
+        padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
+      }
+
+      section { margin-bottom: 3rem; }
+
+      .section-header {
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .section-num {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+      }
+
+      .section-header h2 { font-size: 1.25rem; }
+
+      .card { padding: 1.15rem; }
+
+      .card-grid { gap: 1rem; }
+
+      .mro-step {
+        grid-template-columns: 56px 1fr;
+        gap: 0.75rem;
+        padding: 1rem;
+      }
+
+      .mro-level-tag { font-size: 1.4rem; }
+
+      .mro-step h4 { font-size: 1rem; }
+
+      .timeline {
+        padding-inline-end: 1.25rem;
+      }
+
+      .timeline-item {
+        padding: 0 0 1.75rem 1rem;
+        margin-inline-end: 1rem;
+      }
+
+      .timeline-item::before {
+        inset-inline-end: -1.85rem;
+        width: 12px;
+        height: 12px;
+      }
+
+      .surge-flow,
+      .engine-schematic {
+        padding: 1.25rem 0.75rem;
+      }
+
+      .surge-node {
+        max-width: none;
+        flex: 1 1 calc(50% - 1rem);
+        font-size: 0.8rem;
+        padding: 0.75rem;
+      }
+
+      .schem-part {
+        min-width: 72px;
+        font-size: 0.72rem;
+        padding: 0.6rem 0.5rem;
+      }
+
+      .chapter-nav {
+        padding: 0.5rem 0.75rem;
+        padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
+        scrollbar-width: none;
+      }
+
+      .chapter-nav::-webkit-scrollbar { display: none; }
+
+      .chapter-nav a {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.78rem;
+        min-height: 36px;
+        line-height: 1.4;
+      }
+
+      .tabs { gap: 0.4rem; }
+
+      .tab-btn {
+        flex: 1 1 auto;
+        padding: 0.65rem 0.85rem;
+        font-size: 0.82rem;
+        min-height: 44px;
+        text-align: center;
+      }
+
+      .summary-box { padding: 1rem; }
+
+      .charts-dashboard {
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .chart-card {
+        padding: 1rem;
+      }
+
+      .chart-card h3 {
+        font-size: 0.85rem;
+        line-height: 1.45;
+      }
+
+      .chart-wrap { height: 220px; }
+      .chart-wrap.tall { height: 260px; }
+
+      .chart-note { font-size: 0.7rem; }
+
+      .hist-row {
+        grid-template-columns: 72px 1fr 44px;
+        font-size: 0.72rem;
+        gap: 0.35rem;
+      }
+
+      .tbo-label {
+        flex-direction: column;
+        gap: 0.15rem;
+        font-size: 0.82rem;
+      }
+
+      .tbo-label span:last-child { text-align: start; }
+
+      details.report-block summary {
+        padding: 0.85rem 1rem;
+        font-size: 0.88rem;
+        min-height: 44px;
+      }
+
+      .report-body { padding: 0 1rem 1rem; }
+
+      .report-body p { text-align: start; }
+
+      .expand-toolbar { gap: 0.4rem; }
+
+      .toolbar-btn {
+        flex: 1 1 calc(50% - 0.4rem);
+        min-height: 44px;
+        font-size: 0.78rem;
+      }
+
+      footer {
+        padding: 2rem 1rem;
+        padding-bottom: max(2rem, env(safe-area-inset-bottom, 0px) + 1rem);
+        font-size: 0.8rem;
+      }
+
+      /* Table → stacked cards on mobile */
+      .compare-wrap {
+        overflow-x: visible;
+        background: transparent;
+        border: none;
+      }
+
+      table.compare {
+        min-width: 0;
+        display: block;
+      }
+
+      table.compare thead { display: none; }
+
+      table.compare tbody { display: block; }
+
+      table.compare tr {
+        display: block;
+        background: var(--surface);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        margin-bottom: 0.75rem;
+        padding: 0.25rem 0;
+        overflow: hidden;
+      }
+
+      table.compare tr:hover td { background: transparent; }
+
+      table.compare td {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.75rem;
+        padding: 0.55rem 1rem;
+        text-align: end;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+
+      table.compare td:last-child { border-bottom: none; }
+
+      table.compare td:first-child {
+        display: block;
+        font-weight: 700;
+        color: var(--accent2);
+        font-size: 0.9rem;
+        text-align: start;
+        background: var(--surface2);
+        padding: 0.65rem 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      table.compare td:not(:first-child)::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--muted);
+        font-size: 0.78rem;
+        flex-shrink: 0;
+        text-align: start;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .hero h1 { font-size: 1.45rem; }
+
+      .hero-sub { font-size: 0.92rem; }
+
+      .hero-badge { font-size: 0.78rem; }
+
+      .stat-pill {
+        flex: 1 1 100%;
+      }
+
+      .section-header h2 { font-size: 1.1rem; }
+
+      .chart-wrap { height: 200px; }
+
+      .hist-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+      }
+
+      .hist-row span:last-child {
+        text-align: start;
+        font-size: 0.7rem;
+        color: var(--muted);
+      }
+    }
+
+    @media (hover: none) {
+      .card:hover,
+      .chart-card:hover,
+      .stat-pill:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      .card:hover::before { transform: scaleX(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <nav class="chapter-nav" aria-label="فهرست فصل‌ها">
+    <a href="#hero">شروع</a>
+    <a href="#dashboard">نمودارها</a>
+    <a href="#mro">MRO</a>
+    <a href="#engines">موتور</a>
+    <a href="#lifecycle">چرخه عمر</a>
+    <a href="#systems">سیستم‌ها</a>
+    <a href="#ir-bdr">IR و BDR</a>
+    <a href="#climate">اقلیم</a>
+    <a href="#future">آینده</a>
+    <a href="#conclusion">نتیجه</a>
+    <a href="#sources">منابع</a>
+  </nav>
+
+  <nav class="progress-nav" aria-hidden="true">
+    <a href="#hero" class="progress-dot active" title="شروع"></a>
+    <a href="#dashboard" class="progress-dot" title="نمودارها"></a>
+    <a href="#mro" class="progress-dot" title="MRO"></a>
+    <a href="#engines" class="progress-dot" title="موتورها"></a>
+    <a href="#lifecycle" class="progress-dot" title="چرخه عمر"></a>
+    <a href="#systems" class="progress-dot" title="سیستم‌ها"></a>
+    <a href="#future" class="progress-dot" title="آینده"></a>
+    <a href="#sources" class="progress-dot" title="منابع"></a>
+  </nav>
+
+  <header class="hero" id="hero">
+    <span class="hero-badge">✈ <span class="ltr-term">NATO: Frogfoot</span> · Грач</span>
+    <h1>MRO موتورهای تومانسکی R-95Sh و R-195<br />جنگنده سوخو ۲۵</h1>
+    <p class="hero-sub">
+      تعمیر، نگهداری و اورهال پیشرانه‌های توربوجت خانواده R-13 — از خط پرواز تا دیپو،
+      با تمرکز بر بقاپذیری میدانی، ضد پمپاژ و مدیریت چرخه عمر در شرایط نبرد
+    </p>
+    <div class="hero-stats">
+      <div class="stat-pill reveal">
+        <span class="num" data-count="4500">۰</span>
+        <span class="lbl"><span class="ltr-term">kgf</span> — رانش اضطراری <span class="ltr-term">R-195</span></span>
+      </div>
+      <div class="stat-pill reveal">
+        <span class="num" data-count="500">۰</span>
+        <span class="lbl">ساعت — فاصله اورهال (<span class="ltr-term">TBO</span>)</span>
+      </div>
+      <div class="stat-pill reveal">
+        <span class="num" data-count="3000">۰</span>
+        <span class="lbl">ساعت — عمر هدف ارتقاء یافته</span>
+      </div>
+      <div class="stat-pill reveal">
+        <span class="num" data-count="1000">۰+</span>
+        <span class="lbl">فروند ساخته‌شده <span class="ltr-term">Su-25</span></span>
+      </div>
+    </div>
+    <p class="scroll-hint">▼ پایین بیایید</p>
+  </header>
+
+  <main class="container">
+
+    <p class="reveal" style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem;">
+      هر بخش با خلاصه‌ای خوانا آغاز می‌شود؛ برای مطالعه جزئیات بیشتر، دکمه <strong style="color:var(--accent2)">More</strong> را بزنید.
+    </p>
+    <div class="expand-toolbar reveal">
+      <button type="button" class="toolbar-btn" id="expand-all">باز کردن همه More</button>
+      <button type="button" class="toolbar-btn" id="collapse-all">بستن همه More</button>
+    </div>
+
+    <!-- Charts Dashboard -->
+    <section id="dashboard" class="reveal">
+      <div class="section-header">
+        <span class="section-num">📊</span>
+        <h2>داده‌های آماری و نمودارها</h2>
+      </div>
+      <div class="charts-dashboard">
+        <div class="chart-card reveal">
+          <h3>مقایسه رانش موتور (kgf) — منبع: گزارش / airwar.ru</h3>
+          <div class="chart-wrap"><canvas id="chartThrust"></canvas></div>
+        </div>
+        <div class="chart-card reveal">
+          <h3>دمای گاز پیش از توربین (TIT) — °C</h3>
+          <div class="chart-wrap"><canvas id="chartTIT"></canvas></div>
+        </div>
+        <div class="chart-card reveal">
+          <h3>نسبت تراکم</h3>
+          <div class="chart-wrap"><canvas id="chartPressure"></canvas></div>
+        </div>
+        <div class="chart-card reveal">
+          <h3>مصرف ویژه سوخت (SFC) — kg/kgf/h</h3>
+          <div class="chart-wrap"><canvas id="chartSFC"></canvas></div>
+        </div>
+        <div class="chart-card reveal">
+          <h3>چرخه عمر و TBO (ساعت پرواز)</h3>
+          <div class="chart-wrap"><canvas id="chartLifecycle"></canvas></div>
+        </div>
+        <div class="chart-card reveal">
+          <h3>توزیع ظرفیت سوخت Su-25 (لیتر)</h3>
+          <div class="chart-wrap"><canvas id="chartFuel"></canvas></div>
+          <p class="chart-note">مخزن ۱: ۱۱۲۸ · مخزن ۲: ۱۲۵۷ · بال + خارجی: ~۴۶۳۵ (کل ۷۰۲۰)</p>
+        </div>
+        <div class="chart-card reveal">
+          <h3>ترکیب سازه Su-25 (٪) — Wikipedia</h3>
+          <div class="chart-wrap"><canvas id="chartStructure"></canvas></div>
+        </div>
+        <div class="chart-card reveal">
+          <h3>کاهش زمان نگهداری خط پرواز پس از Su-25SM (٪)</h3>
+          <div class="chart-wrap"><canvas id="chartMaint"></canvas></div>
+          <p class="chart-note">کاهش ۲۵–۳۰٪ — CombatAce / Wikipedia</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1: MRO Fundamentals -->
+    <section id="mro" class="reveal">
+      <div class="section-header">
+        <span class="section-num">⚙</span>
+        <h2>مبانی MRO موتورهای توربوجت</h2>
+      </div>
+      <div class="summary-box reveal">
+        <h3>خلاصه</h3>
+        <p style="color:var(--muted); font-size:0.92rem;">مهندسی MRO در ناوگان نظامی بر پیش‌بینی و رفع زوال پیش از وقوع فاجعه متمرکز است، نه صرفاً تعویض قطعه پس از خرابی. نگهداری موتورهای توربوجت در سه سطح خط پرواز، کارگاه پایگاه و دیپو انجام می‌شود و مراقبت از کمپرسور، بازرسی‌های غیرمخرب و بوروسکوپی بخش داغ، از ارکان اصلی نگهداری در سطح دیپو به‌شمار می‌روند.</p>
+      </div>
+
+      <div class="mro-ladder">
+        <div class="mro-step reveal">
+          <span class="mro-level-tag">O</span>
+          <div>
+            <h4>نگهداری خط پرواز (Line / O-Level)</h4>
+            <p style="color: var(--muted); font-size: 0.9rem;">
+              بازرسی پیش و پس از پرواز، پایش پارامترها در Idle، نمونه‌برداری SOAP از روغن،
+              شستشوی کمپرسور (Dry Cranking)، بررسی FOD در پره‌های LP
+            </p>
+          </div>
+        </div>
+        <div class="mro-step reveal">
+          <span class="mro-level-tag">I</span>
+          <div>
+            <h4>نگهداری میانی (Intermediate / I-Level)</h4>
+            <p style="color: var(--muted); font-size: 0.9rem;">
+              تست سیستم ضد پمپاژ، سنسورهای فشار، شیرهای Bleed، جرقه‌زنی مداوم،
+              بوروسکوپی دوره‌ای، تنظیم FCU در Hot/High
+            </p>
+          </div>
+        </div>
+        <div class="mro-step reveal">
+          <span class="mro-level-tag">D</span>
+          <div>
+            <h4>اورهال دیپو (Depot / D-Level)</h4>
+            <p style="color: var(--muted); font-size: 0.9rem;">
+              شکافت ماژولار، NDT (FPI، MPI، Eddy Current)، تعویض پره‌های آسیب‌دیده،
+              کارگاه‌های ۲۱۸ ARZ گاتچینا، ۵۵۸ ARZ بلاروس، UPO اوفا
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-grid" style="margin-top: 2rem;">
+        <div class="card reveal">
+          <div class="card-icon">🔬</div>
+          <h3>بازرسی غیرمخرب (NDT)</h3>
+          <p>FPI برای تیتانیوم، MPI برای شفت فولادی، Eddy Current برای ترک زیرسطحی در دیسک‌ها</p>
+          <div class="badge-row">
+            <span class="tech-badge">FPI</span>
+            <span class="tech-badge">MPI</span>
+            <span class="tech-badge">Eddy Current</span>
+            <span class="tech-badge">Borescope</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="card-icon">🌡️</div>
+          <h3>بخش داغ (Hot Section)</h3>
+          <p>پایش خزش (Creep)، اکسیداسیون، Sulfidation در پره‌های توربین تحت ده‌ها هزار G و TIT تا ۹۳۰°C</p>
+        </div>
+        <div class="card reveal">
+          <div class="card-icon">💨</div>
+          <h3>شستشوی کمپرسور</h3>
+          <p>حلال امولسیونی + آب دیونیزه در <span class="ltr-term">Dry Crank</span> — بازیابی <span class="ltr-term">Stall Margin</span> و کاهش <span class="ltr-term">EGT</span></p>
+        </div>
+      </div>
+
+      <details class="report-block">
+        <summary><span class="more-label"><span class="more-badge">More</span> مقدمه و مبانی MRO</span></summary>
+        <div class="report-body report-verbatim" data-report="mro"></div>
+      </details>
+    </section>
+
+    <!-- Section 2: Engines -->
+    <section id="engines" class="reveal">
+      <div class="section-header">
+        <span class="section-num">🔧</span>
+        <h2>تکامل و معماری پیشرانه</h2>
+      </div>
+      <div class="summary-box reveal">
+        <h3>خلاصه</h3>
+        <p style="color:var(--muted); font-size:0.92rem;">موتور R-95Sh با حذف پس‌سوز از معماری R-13 برای نقش تهاجمی سوخو ۲۵ بازطراحی شد و نیازهای MRO خط پرواز را کاهش داد. نسل R-195 با حفظ جایگزینی مستقیم، رانش بالاتر، TIT تا ۹۳۰ درجه سانتی‌گراد و بهبود پنهان‌کاری IR عرضه شد؛ این افزایش دما مستلزم متالورژی تقویت‌شده پره‌های توربین و رعایت دقیق‌تر پروتکل‌های نگهداری است.</p>
+      </div>
+
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-year">۱۹۶۰–۷۰ · R-11 / R-13</div>
+          <p>توربوجت دوقلو (۳ LP + ۵ HP)، میگ-۲۱ و سوخو-۱۵ — پایه معماری تومانسکی</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">۱۹۷۵ · اولین پرواز Su-25</div>
+          <p>۲۲ فوریه — طراحی CAS زیرصوت؛ نیاز به موتور بدون پس‌سوز و MRO میدانی</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">R-95Sh</div>
+          <p>حذف Afterburner، نازل ثابت همگرا، ۸ مرحله کمپرسور، ۱۰ لوله شعله، تولید از ۱۹۷۸</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">R-195</div>
+          <p>+۱۲٪ رانش، TIT ۹۳۰°C، مخروط مرکزی خنک‌شونده IR، تحمل ۲۳mm در ۸ نقطه</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">Su-25SM · ارتقاء</div>
+          <p>سیستم ضد پمپاژ، BARK/FADEC، کاهش ۲۵–۳۰٪ زمان نگهداری خط پرواز</p>
+        </div>
+      </div>
+
+      <div class="engine-schematic flow-seq reveal" aria-label="مسیر جریان موتور">
+        <span class="schem-part">ورودی هوا</span>
+        <span class="schem-arrow">←</span>
+        <span class="schem-part">کمپرسور ۸ مرحله</span>
+        <span class="schem-arrow">←</span>
+        <span class="schem-part">محفظه احتراق <span class="ltr-term">Can-annular</span></span>
+        <span class="schem-arrow">←</span>
+        <span class="schem-part">توربین ۲ مرحله</span>
+        <span class="schem-arrow">←</span>
+        <span class="schem-part">نازل اگزوز</span>
+      </div>
+
+      <h3 style="margin: 2rem 0 1rem; font-size: 1.2rem;">مقایسه R-95Sh و R-195</h3>
+      <div class="compare-wrap reveal">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>پارامتر</th>
+              <th>R-95Sh</th>
+              <th>R-195</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>رانش حداکثر پیوسته</td>
+              <td data-label="R-95Sh">۴,۱۰۰ kgf (۴۰.۲ kN)</td>
+              <td class="highlight-cell" data-label="R-195">۴,۳۰۰ kgf (۴۲.۱ kN)</td>
+            </tr>
+            <tr>
+              <td>رانش اضطراری</td>
+              <td data-label="R-95Sh">—</td>
+              <td class="highlight-cell" data-label="R-195">۴,۵۰۰ kgf (۴۴.۱۳ kN)</td>
+            </tr>
+            <tr>
+              <td>SFC</td>
+              <td data-label="R-95Sh">۰.۸۶۰</td>
+              <td data-label="R-195">۰.۸۹۰</td>
+            </tr>
+            <tr>
+              <td>نسبت تراکم</td>
+              <td data-label="R-95Sh">۸.۶۶–۸.۷</td>
+              <td class="highlight-cell" data-label="R-195">۹.۰–۹.۰۵</td>
+            </tr>
+            <tr>
+              <td>TIT</td>
+              <td data-label="R-95Sh">۸۷۵°C</td>
+              <td class="highlight-cell" data-label="R-195">۹۳۰°C</td>
+            </tr>
+            <tr>
+              <td>وزن خشک</td>
+              <td data-label="R-95Sh">۸۳۰ kg</td>
+              <td data-label="R-195">۸۶۰ kg</td>
+            </tr>
+            <tr>
+              <td>دبی هوا</td>
+              <td data-label="R-95Sh">۶۷ kg/s</td>
+              <td data-label="R-195">۶۶ kg/s</td>
+            </tr>
+            <tr>
+              <td>نازل</td>
+              <td data-label="R-95Sh">ثابت همگرا</td>
+              <td data-label="R-195">همگرا + مخروط مرکزی (IR)</td>
+            </tr>
+            <tr>
+              <td>تحمل بالستیک</td>
+              <td data-label="R-95Sh">استاندارد CAS</td>
+              <td class="highlight-cell" data-label="R-195">۲۳mm در ۸ نقطه</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <details class="report-block">
+        <summary><span class="more-label"><span class="more-badge">More</span> طراحی و معماری پیشرانه</span></summary>
+        <div class="report-body report-verbatim" data-report="engines"></div>
+      </details>
+    </section>
+
+    <!-- Section 3: Lifecycle -->
+    <section id="lifecycle" class="reveal">
+      <div class="section-header">
+        <span class="section-num">⏱</span>
+        <h2>چرخه عمر، TBO و گارانتی</h2>
+      </div>
+      <div class="summary-box reveal">
+        <h3>خلاصه</h3>
+        <p style="color:var(--muted); font-size:0.92rem;">فاصله استاندارد اورهال (TBO) موتور R-195 هر ۵۰۰ ساعت پرواز و عمر طراحی آن ۲۰۰۰ ساعت است. در دوره گارانتی ۵۰۰ ساعت اول، مجموع کار در حالت حداکثری نباید از ۶۲.۵ ساعت و استفاده از حالت اضطراری (۴۵۰۰ kgf) از ۱۵ ساعت فراتر رود. برنامه ارتقاء عمر تا ۳۰۰۰ ساعت با آزمون ۷۵۰۰ ساعته روی استندهای آزمایشی در دست اجراست.</p>
+      </div>
+
+      <div class="tbo-chart reveal">
+        <div class="tbo-row">
+          <div class="tbo-label"><span>گارانتی اولیه (حداکثر / اضطراری)</span><span>۵۰۰h / ۶۲.۵h max / ۱۵h emergency</span></div>
+          <div class="tbo-bar-bg"><div class="tbo-bar-fill" data-width="17">۵۰۰ ساعت</div></div>
+        </div>
+        <div class="tbo-row">
+          <div class="tbo-label"><span>فاصله اورهال میانی (Inter-repair TBO)</span><span>هر ۵۰۰ ساعت پرواز</span></div>
+          <div class="tbo-bar-bg"><div class="tbo-bar-fill" data-width="17">۵۰۰ ساعت</div></div>
+        </div>
+        <div class="tbo-row">
+          <div class="tbo-label"><span>عمر طراحی اولیه R-195</span><span>۲۰۰۰ ساعت</span></div>
+          <div class="tbo-bar-bg"><div class="tbo-bar-fill" data-width="67">۲۰۰۰ ساعت</div></div>
+        </div>
+        <div class="tbo-row">
+          <div class="tbo-label"><span>هدف ارتقاء (۲ موتور × ۷۵۰۰h تست سلول)</span><span>۳۰۰۰ ساعت</span></div>
+          <div class="tbo-bar-bg"><div class="tbo-bar-fill" data-width="100">۳۰۰۰ ساعت</div></div>
+        </div>
+      </div>
+
+      <div class="alert-box reveal" style="margin-top: 2rem;">
+        <strong>توجه MRO:</strong> افزایش TIT از ۸۷۵ به ۹۳۰°C در گذار به R-195 —
+        کاهش نمایی عمر خزشی پره‌های توربین در صورت عدم رعایت پروتکل‌ها.
+        حالت اضطراری ۴۵۰۰ kgf محدود به ۱۵ ساعت در دوره گارانتی.
+      </div>
+
+      <div class="card reveal" style="margin-top: 1.5rem;">
+        <h3 style="color: var(--accent2); margin-bottom: 0.5rem;">🇧🇬 تمدید عمر ناوگان — ۵۵۸ ARZ بلاروس</h3>
+        <p style="color: var(--muted); font-size: 0.9rem;">
+          اورهال Su-25 بلغارستان: تعویض R-95Sh، تمدید چرخه تا ~۲۰۲۸ با پتانسیل ۱۰ سال دیگر.
+          منبع: <a class="url" href="https://vpk.gov.by/en/news/bulgaria-receives-first-two-su-25s-upgraded-and-overhauled-by-belarus.html" target="_blank" rel="noopener">vpk.gov.by</a>
+        </p>
+      </div>
+
+      <details class="report-block">
+        <summary><span class="more-label"><span class="more-badge">More</span> TBO و اورهال دیپو</span></summary>
+        <div class="report-body report-verbatim" data-report="lifecycle"></div>
+      </details>
+    </section>
+
+    <!-- Section 4: Systems -->
+    <section id="systems" class="reveal">
+      <div class="section-header">
+        <span class="section-num">💧</span>
+        <h2>سیالات، سوخت و روانکاری</h2>
+      </div>
+      <div class="summary-box reveal">
+        <h3>خلاصه</h3>
+        <p style="color:var(--muted); font-size:0.92rem;">سیستم سوخت و روغن سوخو ۲۵ برای عملیات از پایگاه‌های دورافتاده طراحی شده و ظرفیت کل سوخت‌گیری آن حدود ۷۰۲۰ لیتر است. آنالیز منظم روغن (SOAP) و بازرسی دوره‌ای فوم‌های مخزن از الزامات نگهداری خط پرواز محسوب می‌شوند. هر بار که از سوخت غیرمتعارف، به‌ویژه دیزل، استفاده شود، فلاشینگ کامل سیستم با سوخت TS-1 پس از بازگشت به پایگاه الزامی است.</p>
+      </div>
+
+      <div class="card-grid reveal">
+          <div class="card">
+            <h3>روغن‌کاری</h3>
+            <p>MK-8P · VNII-NP50-1-4F · IPM-10 — آنالیز SOAP برای ذرات Fe، Cu، Ag، Ti</p>
+          </div>
+          <div class="card">
+            <h3>سوخت (۷۰۲۰ لیتر)</h3>
+            <p>T-1، TS-1، RT + بنزین MT و دیزل — فلاشینگ اجباری پس از دیزل</p>
+          </div>
+          <div class="card">
+            <h3>فوم PU و لاتکس</h3>
+            <p>خودترمیم ۲۰mm — تجزیه فوم → مسدودی فیلتر → کاویتاسیون DTSN-96</p>
+          </div>
+      </div>
+
+      <details class="report-block">
+        <summary><span class="more-label"><span class="more-badge">More</span> سیالات و سوخت</span></summary>
+        <div class="report-body report-verbatim" data-report="systems"></div>
+      </details>
+    </section>
+
+    <section id="ir-bdr" class="reveal">
+      <div class="section-header">
+        <span class="section-num">🛡</span>
+        <h2>پمپاژ، IR و آسیب نبرد</h2>
+      </div>
+      <div class="summary-box reveal">
+        <h3>خلاصه</h3>
+        <p style="color:var(--muted); font-size:0.92rem;">شلیک توپ و راکت می‌تواند گاز داغ و کم‌اکسیژن را به ورودی موتور هدایت کند و پدیده پمپاژ (Surge) را برانگیزد؛ نسخه Su-25SM با سیستم ضد پمپاژ این ریسک را کاهش می‌دهد. موتور R-195 با مخروط مرکزی خنک‌شونده و مسدودسازی خط دید مستقیم به توربین، ردپای حرارتی (IR) را کم می‌کند. این موتور تحمل برخورد گلوله ۲۳ میلی‌متری در هشت نقطه را دارد و روش‌های ABDR برای تعمیر آسیب نبرد تعریف شده‌اند.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card"><h3>پمپاژ و GSh-30-2</h3><p>گاز داغ کم‌اکسیژن → افت چگالی → <span class="ltr-term">Surge</span>؛ سیستم ضد پمپاژ در Su-25SM</p></div>
+        <div class="card"><h3>IR در R-195</h3><p>قانون استفان-بولتزمن؛ مخروط مرکزی + <span class="ltr-term">Ram Air</span></p></div>
+        <div class="card"><h3>ABDR</h3><p>دیواره آتش ۵mm؛ درناژ؛ تحمل ۲۳mm در ۸ نقطه</p></div>
+      </div>
+
+      <div class="surge-flow flow-seq reveal" style="margin:1.5rem 0;">
+        <span class="surge-node">شلیک توپ/راکت</span>
+        <span class="surge-arrow">←</span>
+        <span class="surge-node">گاز داغ در Intake</span>
+        <span class="surge-arrow">←</span>
+        <span class="surge-node danger">Surge / Flameout</span>
+        <span class="surge-arrow">←</span>
+        <span class="surge-node" style="border-color:var(--accent);">ضد پمپاژ</span>
+      </div>
+
+      <details class="report-block">
+        <summary><span class="more-label"><span class="more-badge">More</span> پمپاژ، IR و BDR</span></summary>
+        <div class="report-body report-verbatim" data-report="ir-bdr"></div>
+      </details>
+    </section>
+
+    <section id="climate" class="reveal">
+      <div class="section-header">
+        <span class="section-num">🌍</span>
+        <h2>چالش‌های اقلیمی MRO</h2>
+      </div>
+      <div class="summary-box reveal">
+        <h3>خلاصه</h3>
+        <p style="color:var(--muted); font-size:0.92rem;">سوخو ۲۵ در بیابان، کوهستان و سرمای سیبری به عملیات پرداخته و هر اقلیم رویه MRO مخصوص به خود را می‌طلبد. در محیط شن‌زار، بازرسی بوروسکوپی پره‌های توربین باید با فاصله کمتر از ۲۵ پرواز انجام شود. در شرایط گرم و مرتفع، کالیبراسیون EGT و تنظیم FCU ضروری است و در سرمای شدید، پیش‌گرم‌کن روغن و تخلیه آب از یخ‌زدگی فیلتر سوخت جلوگیری می‌کند.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card"><h3>بیابان</h3><p>سایش سیلیس، شیشه‌سازی روی توربین — بوروسکوپی هر ۲۵ پرواز</p></div>
+        <div class="card"><h3>Hot/High</h3><p>Trim FCU و کالیبراسیون EGT</p></div>
+        <div class="card"><h3>قطبی</h3><p>Pre-heater، تخلیه آب — جلوگیری از Fuel Icing</p></div>
+      </div>
+      <details class="report-block">
+        <summary><span class="more-label"><span class="more-badge">More</span> اقلیم و MRO</span></summary>
+        <div class="report-body report-verbatim" data-report="climate"></div>
+      </details>
+    </section>
+
+    <section id="future" class="reveal">
+      <div class="section-header">
+        <span class="section-num">🔮</span>
+        <h2>ارتقاء دیجیتال و آینده MRO</h2>
+      </div>
+      <div class="summary-box reveal">
+        <h3>خلاصه</h3>
+        <p style="color:var(--muted); font-size:0.92rem;">ارتقاء دیجیتال با سیستم BARK-88 (FADEC) و ثبت‌کننده پرواز Karat-B-25 FDR، امکان نگهداری پیش‌بینانه را فراهم می‌کند. خودآزمایی BITE زمان بازرسی خط پرواز را ۲۵ تا ۳۰ درصد کاهش داده و حدود ۳۰۰ کیلوگرم از وزن تجهیزات کنترل موتور کاسته شده است.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card reveal">
+          <h3>BARK-88 / FADEC</h3>
+          <p>جایگزینی FCU هیدرومکانیکی — ملایم‌سازی Transient، کاهش تنش حرارتی توربین (UEC)</p>
+        </div>
+        <div class="card reveal">
+          <h3>Karat-B-25 FDR</h3>
+          <p>تحلیل روند در کارگاه — پیش‌بینی خرابی یاتاقان و کمپرسور پیش از وقوع</p>
+        </div>
+        <div class="card reveal">
+          <h3>BITE / Self-test</h3>
+          <p>کاهش ۲۵–۳۰٪ بار نگهداری خط پرواز · ~۳۰۰ <span class="ltr-term">kg</span> سبک‌تر شدن تجهیزات کنترل</p>
+        </div>
+      </div>
+
+      <details class="report-block">
+        <summary><span class="more-label"><span class="more-badge">More</span> ارتقاء دیجیتال</span></summary>
+        <div class="report-body report-verbatim" data-report="future"></div>
+      </details>
+    </section>
+
+    <section id="conclusion" class="reveal">
+      <div class="section-header">
+        <span class="section-num">✓</span>
+        <h2>نتیجه‌گیری</h2>
+      </div>
+      <div class="summary-box reveal">
+        <h3>خلاصه</h3>
+        <p style="color:var(--muted); font-size:0.92rem;">موتورهای R-95Sh و R-195 ترکیبی از بقاپذیری بالستیک، انعطاف در مصرف سوخت و مهندسی MRO میدانی با ارتقاءهای آیرودینامیکی و دیجیتال مدرن هستند. موفقیت در مدیریت چرخه عمر این پیشرانه‌ها به پایبندی سخت‌گیرانه به NDT، پایش مداوم پارامترهای ترمودینامیکی و به‌کارگیری فناوری‌های نظارت دیجیتال وابسته است.</p>
+      </div>
+      <details class="report-block">
+        <summary><span class="more-label"><span class="more-badge">More</span> نتیجه‌گیری گزارش</span></summary>
+        <div class="report-body report-verbatim" data-report="conclusion"></div>
+      </details>
+    </section>
+
+    <section class="reveal">
+      <div class="section-header">
+        <span class="section-num">✈</span>
+        <h2>سوخو ۲۵ در یک نگاه</h2>
+      </div>
+      <div class="card-grid">
+        <div class="card"><h3>نخستین پرواز</h3><p>۲۲ فوریه ۱۹۷۵ · ورود به خدمت ۱۹ ژوئیه ۱۹۸۱</p></div>
+        <div class="card"><h3>سازه</h3><p>۶۰٪ آلومینیوم، ۱۳.۵٪ تیتانیوم — کابین زرهی «وان»</p></div>
+        <div class="card"><h3>تسلیحات</h3><p>GSh-30-2 · S-13T · Vikhr · R-73 پس از SM</p></div>
+        <div class="card"><h3>درگیری‌ها</h3><p>افغانستان، خلیج فارس، چچن، سوریه، اوکراین، قره‌باغ ۲۰۲۰</p></div>
+      </div>
+      <details class="extra-block">
+        <summary>🔗 تاریخچه عملیاتی Su-25 (Wikipedia)</summary>
+        <div class="extra-body">
+          <p>بیش از ۱۰۰۰ فروند؛ اولین پرواز ۱۹۷۵؛ درگیری‌ها: افغانستان (۶۰٬۰۰۰ سورتی)، خلیج فارس، چچن، گرجستان ۲۰۰۸، سوریه، اوکراین، قره‌باغ ۲۰۲۰. سازه: ۶۰٪ Al، ۱۹٪ فولاد، ۱۳.۵٪ Ti.</p>
+          <a class="source-item url" href="https://en.wikipedia.org/wiki/Sukhoi_Su-25" target="_blank" rel="noopener">Sukhoi Su-25 — Wikipedia</a>
+        </div>
+      </details>
+    </section>
+
+    <section id="sources" class="reveal">
+      <div class="section-header">
+        <span class="section-num">📚</span>
+        <h2>منابع و ارجاعات</h2>
+      </div>
+      <p style="color: var(--muted); margin-bottom: 1rem;">کلیک کنید تا لیست منابع گزارش و لینک‌های تحقیق باز شود.</p>
+      <details class="report-block">
+        <summary><span class="more-label"><span class="more-badge">More</span> فهرست منابع گزارش</span></summary>
+        <div class="report-body report-verbatim" data-report="sources"></div>
+      </details>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>بر پایه گزارش «MRO موتورهای سوخو ۲۵» و منابع: Wikipedia · airwar.ru · aviaros.narod.ru · vpk.gov.by · MDPI · EASA</p>
+    <p style="margin-top: 0.5rem;">
+      <a class="url" href="https://en.wikipedia.org/wiki/Sukhoi_Su-25">Su-25</a> ·
+      <a class="url" href="https://en.wikipedia.org/wiki/Tumansky_R-13">Tumansky R-13</a> ·
+      <a class="url" href="http://www.airwar.ru/enc/engines/r195.html">Р-195</a>
+    </p>
+  </footer>
+
+  <script src="mro-report-sections.js"></script>
+  <script>
+    // Load verbatim report into More panels
+    document.querySelectorAll('[data-report]').forEach(el => {
+      const key = el.dataset.report;
+      if (window.REPORT_SECTIONS && REPORT_SECTIONS[key]) {
+        el.innerHTML = REPORT_SECTIONS[key];
+      }
+    });
+
+    // Floating particles
+    const particlesEl = document.getElementById('particles');
+    if (particlesEl) {
+      for (let i = 0; i < 35; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 12) + 's';
+        p.style.animationDelay = Math.random() * 10 + 's';
+        p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+        particlesEl.appendChild(p);
+      }
+    }
+
+    // Chart.js — data from report + Wikipedia + airwar.ru
+    const chartDefaults = {
+      color: '#8a9bb0',
+      borderColor: 'rgba(255,255,255,0.08)',
+      font: { family: 'Vazirmatn, Tahoma, sans-serif' }
+    };
+    Chart.defaults.color = chartDefaults.color;
+    Chart.defaults.borderColor = chartDefaults.borderColor;
+    Chart.defaults.font.family = chartDefaults.font.family;
+    Chart.defaults.font.size = window.matchMedia('(max-width: 768px)').matches ? 10 : 12;
+
+    function applyChartMobileDefaults() {
+      const mobile = window.matchMedia('(max-width: 768px)').matches;
+      Chart.defaults.font.size = mobile ? 10 : 12;
+      Object.values(Chart.instances || {}).forEach((c) => c.update('none'));
+    }
+    window.addEventListener('resize', applyChartMobileDefaults);
+
+    const green = '#3d8f5a', gold = '#c9a227', blue = '#4a9eff', red = '#e85d4c';
+
+    function mkChart(id, cfg) {
+      const canvas = document.getElementById(id);
+      if (!canvas || typeof Chart === 'undefined') return null;
+      return new Chart(canvas, cfg);
+    }
+
+    mkChart('chartThrust', {
+      type: 'bar',
+      data: {
+        labels: ['R-95Sh پیوسته', 'R-195 پیوسته', 'R-195 اضطراری'],
+        datasets: [{
+          label: 'kgf',
+          data: [4100, 4300, 4500],
+          backgroundColor: [green, blue, gold],
+          borderRadius: 8,
+          animation: { duration: 2000, easing: 'easeOutQuart' }
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: false, min: 3800, grid: { color: 'rgba(255,255,255,0.05)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    const engineCompareOpts = {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', rtl: true, labels: { usePointStyle: true } } },
+      scales: {
+        y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+        x: { grid: { display: false } }
+      }
+    };
+
+    mkChart('chartTIT', {
+      type: 'bar',
+      data: {
+        labels: ['R-95Sh', 'R-195'],
+        datasets: [{
+          label: 'TIT (°C)',
+          data: [875, 930],
+          backgroundColor: [green, gold],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        ...engineCompareOpts,
+        scales: {
+          y: { min: 850, max: 950, grid: { color: 'rgba(255,255,255,0.05)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    mkChart('chartPressure', {
+      type: 'bar',
+      data: {
+        labels: ['R-95Sh', 'R-195'],
+        datasets: [{
+          label: 'نسبت تراکم',
+          data: [8.68, 9.03],
+          backgroundColor: [blue, gold],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        ...engineCompareOpts,
+        scales: {
+          y: { min: 8.5, max: 9.2, grid: { color: 'rgba(255,255,255,0.05)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    mkChart('chartSFC', {
+      type: 'bar',
+      data: {
+        labels: ['R-95Sh', 'R-195'],
+        datasets: [{
+          label: 'SFC (kg/kgf/h)',
+          data: [0.860, 0.890],
+          backgroundColor: [green, blue],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        ...engineCompareOpts,
+        scales: {
+          y: { min: 0.84, max: 0.91, grid: { color: 'rgba(255,255,255,0.05)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    mkChart('chartLifecycle', {
+      type: 'line',
+      data: {
+        labels: ['گارانتی', 'TBO', 'عمر طراحی', 'هدف ارتقاء', 'تست سلول (۲×)'],
+        datasets: [{
+          label: 'ساعت',
+          data: [500, 500, 2000, 3000, 7500],
+          borderColor: blue,
+          backgroundColor: 'rgba(74,158,255,0.15)',
+          fill: true,
+          tension: 0.35,
+          pointRadius: 6,
+          pointHoverRadius: 9
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    mkChart('chartFuel', {
+      type: 'doughnut',
+      data: {
+        labels: ['مخزن ۱ (1128L)', 'مخزن ۲ (1257L)', 'بال + خارجی (~4635L)'],
+        datasets: [{
+          data: [1128, 1257, 4635],
+          backgroundColor: [green, blue, gold],
+          borderWidth: 0,
+          hoverOffset: 12
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '55%',
+        plugins: { legend: { position: 'bottom', rtl: true } }
+      }
+    });
+
+    mkChart('chartStructure', {
+      type: 'polarArea',
+      data: {
+        labels: ['آلومینیوم 60%', 'فولاد 19%', 'تیتانیوم 13.5%', 'منیزیم 2%', 'سایر 5.5%'],
+        datasets: [{
+          data: [60, 19, 13.5, 2, 5.5],
+          backgroundColor: ['#3d8f5a99', '#6b728099', '#4a9eff99', '#c9a22799', '#8a9bb099']
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', rtl: true, labels: { boxWidth: 12 } } },
+        scales: { r: { grid: { color: 'rgba(255,255,255,0.08)' } } }
+      }
+    });
+
+    mkChart('chartMaint', {
+      type: 'bar',
+      data: {
+        labels: ['قبل SM', 'پس SM (کاهش 27.5%)'],
+        datasets: [{
+          label: 'بار نگهداری خط پرواز (نسبی)',
+          data: [100, 72.5],
+          backgroundColor: [red, green],
+          borderRadius: 10
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { max: 100, grid: { color: 'rgba(255,255,255,0.05)' } },
+          y: { grid: { display: false } }
+        }
+      }
+    });
+
+    applyChartMobileDefaults();
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          if (e.target.querySelector('.tbo-bar-fill')) animateTboBars(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // Counter animation
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count, 10);
+      const duration = 2000;
+      const start = performance.now();
+      const fmt = n => n.toLocaleString('fa-IR');
+      function step(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(Math.floor(target * eased)) + (el.dataset.count === '1000' ? '+' : '');
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('[data-count]').forEach(animateCounter);
+          heroObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    const hero = document.querySelector('.hero-stats');
+    if (hero) heroObserver.observe(hero);
+
+    // TBO bars
+    function animateTboBars(container) {
+      container.querySelectorAll('.tbo-bar-fill').forEach(bar => {
+        if (bar.dataset.animated) return;
+        bar.dataset.animated = '1';
+        const w = bar.dataset.width || '50';
+        setTimeout(() => { bar.style.width = w + '%'; }, 200);
+      });
+    }
+
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Progress nav + chapter nav
+    const sections = ['hero', 'dashboard', 'mro', 'engines', 'lifecycle', 'systems', 'ir-bdr', 'climate', 'future', 'conclusion', 'sources'];
+    const dots = document.querySelectorAll('.progress-dot');
+    const chapterLinks = document.querySelectorAll('.chapter-nav a');
+    function updateNav() {
+      let current = 'hero';
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 220) current = id;
+      });
+      dots.forEach(d => d.classList.toggle('active', d.getAttribute('href') === '#' + current));
+      chapterLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }
+    window.addEventListener('scroll', updateNav);
+    updateNav();
+
+    // Expand / collapse all report blocks
+    document.getElementById('expand-all')?.addEventListener('click', () => {
+      document.querySelectorAll('details.report-block').forEach(d => { d.open = true; });
+    });
+    document.getElementById('collapse-all')?.addEventListener('click', () => {
+      document.querySelectorAll('details.report-block').forEach(d => { d.open = false; });
+    });
+  </script>
+</body>
+</html>
